@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Monthly Calendar</h2>
+<div id="calendar"></div>
+
+<form method="POST" action="/add_event" id="add-event-form" class="mt-4">
+    <input type="text" name="title" placeholder="Event Title" required class="form-control mb-2">
+    <input type="date" name="date" required class="form-control mb-2">
+    <button type="submit" class="btn btn-primary">Add Event</button>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        events: '/calendar/events',
+        dateClick: function (info) {
+            document.querySelector('[name="date"]').value = info.dateStr;
+        }
+    });
+    calendar.render();
+});
+</script>
+{% endblock %}
